@@ -94,3 +94,7 @@ def add_expense(expense: ExpenseCreate):
 def clear_expenses():
     delete_all_expenses()
     return {"message": "All expenses deleted"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
