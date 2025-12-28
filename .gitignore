@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+.venv/
+
+# Database files
+*.db
+
+# Uploaded files
+uploaded.csv
