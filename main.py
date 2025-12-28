@@ -69,8 +69,18 @@ async def upload_csv(file: UploadFile = File(...)):
     decoded = contents.decode("utf-8")
     reader = csv.DictReader(io.StringIO(decoded))
 
+    required_fields = {"date", "description", "category", "amount"}
+
     for row in reader:
-        analyze_expenses_from_row(row)
+        if not required_fields.issubset(row.keys()):
+            return {"error": "Invalid CSV format"}
+
+        insert_expense(
+            row["date"],
+            row["description"],
+            row["category"],
+            float(row["amount"]),
+        )
 
     return {"message": "CSV uploaded successfully"}
 
@@ -99,11 +109,6 @@ def add_expense(expense: ExpenseCreate):
         expense.amount,
     )
     return {"message": "Expense added successfully"}
-
-@app.delete("/expenses")
-def clear_expenses():
-    delete_all_expenses()
-    return {"message": "All expenses deleted"}
 
 if __name__ == "__main__":
     import uvicorn
