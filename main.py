@@ -9,6 +9,7 @@ from database import delete_all_expenses
 from database import create_table
 from pydantic import BaseModel
 from database import insert_expense, delete_all_expenses
+from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import csv
 import io
